@@ -44,14 +44,12 @@
             var xml = new XmlDocument();
 
             var response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                await ProcessResponseToXml(response, xml);
+            if (!response.IsSuccessStatusCode) return null;
 
-                return ConvertXmlToUser(xml);
-            }
+            await ProcessResponseToXml(response, xml);
 
-            return null;
+            return ConvertXmlToUser(xml);
+
         }
 
         private static void InitClient()
