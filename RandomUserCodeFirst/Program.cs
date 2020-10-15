@@ -61,14 +61,19 @@
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
         }
 
+        private static void InsertSeedUser(UserContext userContext)
+        {
+            userContext.Add(new User { Name = "LRV", Cell = "555", Email = "@.com", Phone = "555" });
+            userContext.SaveChanges();
+        }
+
         private static void Main(string[] args)
         {
             InitClient();
             using (var userContext = new UserContext())
             {
                 Console.WriteLine("Inserting seed User");
-                userContext.Add(new User { Name = "LRV", Cell = "555", Email = "@.com", Phone = "555" });
-                userContext.SaveChanges();
+                InsertSeedUser(userContext);
 
                 Console.WriteLine("User Retrieval In Progress... ");
                 GetAndStoreUserInContext(userContext, 5).Wait();
